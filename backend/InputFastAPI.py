@@ -27,6 +27,12 @@ class InputFastAPI:
             result = json.dumps({"pods": pod_list})
             return result
 
+        @self.app.post("/create/{name}/{docker_image}/{port}")
+        async def create_deployment(name: str, docker_image: str, port: int):
+            print(f"Creating deployment with name: {name}, docker image: {docker_image}, port: {port}")
+            self._kubernetes.create_deployment(name, docker_image, port)
+            return "OK"
+
     def run(self, host="0.0.0.0", port=8000):
         import uvicorn
         uvicorn.run(self.app, host=host, port=port)
