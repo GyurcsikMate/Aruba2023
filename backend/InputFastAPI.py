@@ -24,7 +24,14 @@ class InputFastAPI:
         async def get_pods():
             pods = self._kubernetes.list_all_pods()
             pod_list = [pod.metadata.name for pod in pods.items]
-            result = json.dumps({"pods": pod_list})
+            result = {"pods": pod_list}
+            return result
+
+        @self.app.get("/list/{namespace}")
+        async def get_pods_by_namespace(namespace: str):
+            pods = self._kubernetes.list_all_pods_by_namespace(namespace)
+            pod_list = [pod.metadata.name for pod in pods.items]
+            result = {"pods": pod_list}
             return result
 
     def run(self, host="0.0.0.0", port=8000):
