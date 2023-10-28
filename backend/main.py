@@ -1,7 +1,8 @@
-from backend.InputFastAPI import InputFastAPI
-from backend.OutputKubernetes import OutputKubernetes
+from InputFastAPI import InputFastAPI
+from OutputKubernetes import OutputKubernetes
 
 if __name__ == "__main__":
     kube = OutputKubernetes()
-    InputFastAPI(kube)
+    fastapi = InputFastAPI(kube)
+    #fastapi.run()
     kube.list_all_pods()
