@@ -57,12 +57,11 @@ class InputFastAPI:
 
         @self.app.post("/create/{name}/{docker_image}/{port}")
         async def create_deployment(name: str, docker_image: str, port: int):
-            print(f"Creating deployment with name: {name}, docker image: {docker_image}, port: {port}")
             self._kubernetes.create_deployment(name, docker_image, port)
             return "OK"
+
         @self.app.post("/delete/{name}")
         async def delete_deployment(name: str):
-            print(f"Deleting deployment with name: {name}")
             self._kubernetes.delete_deployment(name)
             return "OK"
 

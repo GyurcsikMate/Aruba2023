@@ -36,6 +36,7 @@ class OutputKubernetes:
             print("Exception when calling %s\n" % e)
 
     def create_deployment(self, name, docker_image, port):
+        print(f"POST create_deployment: {name}, {docker_image}, {port}")
         deployment = client.V1Deployment(
             metadata=client.V1ObjectMeta(name=name),
             spec=client.V1DeploymentSpec(
@@ -62,16 +63,14 @@ class OutputKubernetes:
         try:
             api_instance.create_namespaced_deployment(
                 namespace="default", body=deployment)
-            print("Deployment created.")
         except Exception as e:
             print(f"Deployment creation failed: {str(e)}")
 
-
     def delete_deployment(self, name):
+        print(f"DELETE delete_deployment: {name}")
         api_instance = client.AppsV1Api()
         try:
             api_instance.delete_namespaced_deployment(
                 name=name, namespace="default", body=client.V1DeleteOptions())
-            print("Deployment deleted.")
         except Exception as e:
             print(f"Deployment deletion failed: {str(e)}")
