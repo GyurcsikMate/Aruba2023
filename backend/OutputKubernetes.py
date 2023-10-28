@@ -16,6 +16,15 @@ class OutputKubernetes:
         except ApiException as e:
             print("Exception when calling %s\n" % e)
 
+    def list_namespaces(self):
+        try:
+            v1 = client.CoreV1Api()
+            print("Listing namespaces:")
+            ret = v1.list_namespace(watch=False)
+            return ret
+        except ApiException as e:
+            print("Exception when calling %s\n" % e)
+
     def list_all_pods_by_namespace(self, namespace):
         try:
             v1 = client.CoreV1Api()
