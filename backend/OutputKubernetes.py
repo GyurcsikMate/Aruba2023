@@ -41,10 +41,10 @@ class OutputKubernetes:
             spec=client.V1DeploymentSpec(
                 replicas=1,
                 selector=client.V1LabelSelector(
-                    match_labels={name: "my-app"}
+                    match_labels={"app": name}
                 ),
                 template=client.V1PodTemplateSpec(
-                    metadata=client.V1ObjectMeta(labels={name: f"from:{docker_image} docker image"}),
+                    metadata=client.V1ObjectMeta(labels={"app": name}),
                     spec=client.V1PodSpec(
                         containers=[
                             client.V1Container(
@@ -65,3 +65,13 @@ class OutputKubernetes:
             print("Deployment created.")
         except Exception as e:
             print(f"Deployment creation failed: {str(e)}")
+
+
+    def delete_deployment(self, name):
+        api_instance = client.AppsV1Api()
+        try:
+            api_instance.delete_namespaced_deployment(
+                name=name, namespace="default", body=client.V1DeleteOptions())
+            print("Deployment deleted.")
+        except Exception as e:
+            print(f"Deployment deletion failed: {str(e)}")
