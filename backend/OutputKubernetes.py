@@ -19,6 +19,6 @@ class OutputKubernetes:
                 ret = v1.list_pod_for_all_namespaces(watch=False)
                 for i in ret.items:
                     print("%s\t%s\t%s" % (i.status.pod_ip, i.metadata.namespace, i.metadata.name))
-                return ret.items
+                return ret
             except ApiException as e:
                 print("Exception when calling sajt%s\n" % e)
