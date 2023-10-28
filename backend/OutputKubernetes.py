@@ -8,20 +8,23 @@ class OutputKubernetes:
         self.configuration = client.Configuration()
 
     def list_all_pods(self):
+        try:
+            v1 = client.CoreV1Api()
+            print("Listing pods with their IPs:")
+            ret = v1.list_pod_for_all_namespaces(watch=False)
+            return ret
+        except ApiException as e:
+            print("Exception when calling %s\n" % e)
 
-        with client.ApiClient(self.configuration) as api_client:
-            # Create an instance of the API class
-            api_instance = client.WellKnownApi(api_client)
+    def list_all_pods_by_namespace(self, namespace):
+        try:
+            v1 = client.CoreV1Api()
+            print("Listing pods with their IPs:")
+            ret = v1.list_namespaced_pod(namespace, watch=False)
+            return ret
+        except ApiException as e:
+            print("Exception when calling %s\n" % e)
 
-            try:
-                v1 = client.CoreV1Api()
-                print("Listing pods with their IPs:")
-                ret = v1.list_pod_for_all_namespaces(watch=False)
-                for i in ret.items:
-                    print("%s\t%s\t%s" % (i.status.pod_ip, i.metadata.namespace, i.metadata.name))
-                return ret
-            except ApiException as e:
-                print("Exception when calling sajt%s\n" % e)
 
     def create_deployment(self, name, docker_image, port):
         deployment = client.V1Deployment(
