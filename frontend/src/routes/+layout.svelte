@@ -5,11 +5,12 @@
 	// Floating UI for Popups
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
+	import Navigation from '$lib/components/Navigation.svelte';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 </script>
 
 <!-- App Shell -->
-<AppShell>
+<AppShell slotSidebarLeft="w-52 bg-surface-500/10 p-4">
 	<svelte:fragment slot="header">
 		<!-- App Bar -->
 		<AppBar>
@@ -23,7 +24,7 @@
 					target="_blank"
 					rel="noreferrer"
 				>
-					Discord
+					Marketplace
 				</a>
 				<a
 					class="btn btn-sm variant-ghost-surface"
@@ -31,7 +32,7 @@
 					target="_blank"
 					rel="noreferrer"
 				>
-					Twitter
+					Dashboard
 				</a>
 				<a
 					class="btn btn-sm variant-ghost-surface"
@@ -39,11 +40,16 @@
 					target="_blank"
 					rel="noreferrer"
 				>
-					GitHub
+					Q&A
 				</a>
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
+	<svelte:fragment slot="sidebarLeft">
+		<Navigation/>
+	</svelte:fragment>
 	<!-- Page Route Content -->
-	<slot />
+	<div class="container p-10 mx-auto">
+		<slot />
+	</div>
 </AppShell>
