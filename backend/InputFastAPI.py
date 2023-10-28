@@ -39,6 +39,11 @@ class InputFastAPI:
             print(f"Creating deployment with name: {name}, docker image: {docker_image}, port: {port}")
             self._kubernetes.create_deployment(name, docker_image, port)
             return "OK"
+        @self.app.post("/delete/{name}")
+        async def delete_deployment(name: str):
+            print(f"Deleting deployment with name: {name}")
+            self._kubernetes.delete_deployment(name)
+            return "OK"
 
     def run(self, host="0.0.0.0", port=8000):
         import uvicorn
