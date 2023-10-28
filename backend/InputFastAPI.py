@@ -61,6 +61,25 @@ class InputFastAPI:
             self._kubernetes.create_deployment(name, docker_image, port)
             return "OK"
 
+        @self.app.get("/active/{namespace}")
+        async def get_active_pods(namespace: str):
+            if namespace == "all":
+                pods = self._kubernetes.list_all_pods()
+            else:
+                pods = self._kubernetes.list_all_pods_by_namespace(namespace)
+            pod_list = [pod.metadata.name for pod in pods.items if pod.status.phase == "Running"]
+            result = {"active_pods": len(pod_list)}
+            return result
+
+        @self.app.get("/count/{namespace}")
+        async def get_pods_count(namespace: str):
+            if namespace == "all":
+                pods = self._kubernetes.list_all_pods()
+            else:
+                pods = self._kubernetes.list_all_pods_by_namespace(namespace)
+            result = {"pods_count": len(pods.items)}
+            return result
+
     def run(self, host="0.0.0.0", port=8000):
         import uvicorn
         uvicorn.run(self.app, host=host, port=port)

@@ -9,6 +9,7 @@ class OutputKubernetes:
 
     def list_all_pods(self):
         try:
+            print("GET list_all_pods")
             v1 = client.CoreV1Api()
             print("Listing pods with their IPs:")
             ret = v1.list_pod_for_all_namespaces(watch=False)
@@ -18,8 +19,8 @@ class OutputKubernetes:
 
     def list_namespaces(self):
         try:
+            print("GET list_namespaces")
             v1 = client.CoreV1Api()
-            print("Listing namespaces:")
             ret = v1.list_namespace(watch=False)
             return ret
         except ApiException as e:
@@ -27,13 +28,12 @@ class OutputKubernetes:
 
     def list_all_pods_by_namespace(self, namespace):
         try:
+            print(f"GET list_all_pods_by_namespace: {namespace}")
             v1 = client.CoreV1Api()
-            print("Listing pods with their IPs:")
             ret = v1.list_namespaced_pod(namespace, watch=False)
             return ret
         except ApiException as e:
             print("Exception when calling %s\n" % e)
-
 
     def create_deployment(self, name, docker_image, port):
         deployment = client.V1Deployment(
