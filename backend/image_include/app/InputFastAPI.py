@@ -1,5 +1,3 @@
-import json
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -84,6 +82,6 @@ class InputFastAPI:
             result = {"pods_count": len(pods.items)}
             return result
 
-    def run(self, host="0.0.0.0", port=8000):
+    def run(self, host="0.0.0.0", port=80):
         import uvicorn
         uvicorn.run(self.app, host=host, port=port)
