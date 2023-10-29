@@ -1,0 +1,22 @@
+   - appProtocol: http
+     name: http
+     port: 80
+     protocol: TCP
+     targetPort: http
+   - appProtocol: https
+     name: https
+     port: 443
+     protocol: TCP
+     targetPort: https
+   selector:
+     app.kubernetes.io/component [1]: controller
+     app.kubernetes.io/instance [2]: ingress-nginx
+     app.kubernetes.io/name [3]: ingress-nginx
+ 
+ 
+ 
+ Links:
+ ------
+ [1] http://app.kubernetes.io/component
+ [2] http://app.kubernetes.io/instance
+ [3] http://app.kubernetes.io/name
