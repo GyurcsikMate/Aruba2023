@@ -21,11 +21,11 @@ FROM node:18.9-slim
 WORKDIR /app
 
 COPY --from=0 /app .
-RUN ls
+
 
 COPY . .
 
-RUN ls
+
 EXPOSE 3000
 
 CMD ["node", "./build"]
